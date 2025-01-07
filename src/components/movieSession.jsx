@@ -11,13 +11,16 @@ export default function MovieSession() {
     requisition.then((res) => {
       setMovie(res.data);
     });
+    requisition.catch(err => {
+        console.log(err.response.data)
+    })
   }, []);
   return (
     <ContainerMovieSession>
       Em cartáz
       <MovieContainer>
         {movie.map((movies, id) => (
-          <StyledMovies>
+          <StyledMovies key={id}>
             <img src={movies.posterURL} />
           </StyledMovies>
         ))}
