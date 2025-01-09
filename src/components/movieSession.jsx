@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { Link} from "react-router-dom";
 export default function MovieSession() {
   const [movie, setMovie] = useState([]);
-  console.log(movie);
   useEffect(() => {
     const requisition = axios.get(
-      "https://mock-api.driven.com.br/api/v5/cineflex/movies"
+      `https://mock-api.driven.com.br/api/v5/cineflex/movies`
     );
     requisition.then((res) => {
       setMovie(res.data);
@@ -14,14 +14,19 @@ export default function MovieSession() {
     requisition.catch(err => {
         console.log(err.response.data)
     })
+    if(movie === 0){
+      <p>Carregando...</p>
+    }
   }, []);
   return (
     <ContainerMovieSession>
-      Em cartáz
+      <h1>Em cartáz</h1>
       <MovieContainer>
-        {movie.map((movies, id) => (
-          <StyledMovies key={id}>
+        {movie.map((movies) => (
+          <StyledMovies key={movies.id}>
+            <Link to={`/SessionTime/${movies.id}`}>
             <img src={movies.posterURL} />
+            </Link>
           </StyledMovies>
         ))}
       </MovieContainer>
@@ -31,13 +36,16 @@ export default function MovieSession() {
 
 const ContainerMovieSession = styled.div`
   //font-family: Arial, Helvetica, sans-serif;
-  font-size: 35px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
-  font-weight: bold;
+  h1{
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+  }
 `;
 const MovieContainer = styled.div`
 display: flex;
