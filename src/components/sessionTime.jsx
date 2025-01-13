@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FaCalendarAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { BsFillCameraReelsFill } from "react-icons/bs";
 
 
@@ -37,7 +37,7 @@ export default function SessionTime() {
           <Divider />
           <Hours>
             {f.showtimes.map((h) => (
-              <p key={h.id}>{h.name}</p>
+              <Link to={`/SessionSeats/${h.id}`}><p key={h.id}>{h.name}</p></Link>
             ))}
           </Hours>
         </ContainerDateHours>
@@ -75,6 +75,7 @@ const Date = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  
   svg,
   p {
     color: #ee897f;
@@ -85,6 +86,7 @@ const Date = styled.div`
     color: white;
     font-size: 20px;
     margin-left: 20px;
+  
   }
 `;
 
@@ -110,6 +112,8 @@ const Hours = styled.div`
     margin-top: 10px;
     margin-bottom: 5px;
     justify-content: center;
+    text-decoration: none;
+    color: #ee897f !important;
   }
 `;
 const MovieSelected = styled.div`
@@ -122,8 +126,11 @@ const MovieSelected = styled.div`
   justify-content: space-around;
   align-items: center;
   h2{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   svg{
     margin-right: 10px;
