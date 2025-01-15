@@ -37,7 +37,7 @@ export default function SessionTime() {
           <Divider />
           <Hours>
             {f.showtimes.map((h) => (
-              <Link to={`/SessionSeats/${h.id}`}><p key={h.id}>{h.name}</p></Link>
+              <Link key={h.id} to={`/SessionSeats/${h.id}`}><p>{h.name}</p></Link>
             ))}
           </Hours>
         </ContainerDateHours>
@@ -64,7 +64,7 @@ const ContainerSessionTime = styled.div`
 `;
 const ContainerDateHours = styled.div`
   background-color: #424343;
-  width: 350px;
+  width: 85%;
   min-height: 150px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -105,7 +105,7 @@ const Hours = styled.div`
   margin-top: 10px;
   p {
     padding: 10px;
-    width: 50px;
+    width: 100%;
     border: solid #ee897f 2px;
     border-radius: 10px;
     display: flex;
@@ -125,6 +125,7 @@ const MovieSelected = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  overflow: hidden;
   h2{
     font-size: 18px;
     font-weight: bold;
