@@ -4,18 +4,22 @@ import Top from "./components/top";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SessionTime from "./components/sessionTime";
 import SessionSeats from "./components/sessionSeats";
+import FullOrder from "./components/fullOrder";
+import { useState } from "react";
 
 function App() {
+  const [orderPlaced, setOrderPlaced] = useState({});
   return (
     <>
-      <GlobalStyled /> {/* O componente de estilo global deve ser auto-fechado */}
+      <GlobalStyled />
       <ContainerApp>
         <Top />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MovieSession />} />
             <Route path="/SessionTime/:idMovies" element={<SessionTime />} />
-            <Route path="/SessionSeats/:idTime" element={<SessionSeats />} />
+            <Route path="/SessionSeats/:idTime" element={<SessionSeats setOrderPlaced={setOrderPlaced} />} />
+            <Route path="/FullOrder" element={<FullOrder />} />
           </Routes>
         </BrowserRouter>
       </ContainerApp>

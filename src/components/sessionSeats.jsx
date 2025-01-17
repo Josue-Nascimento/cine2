@@ -1,17 +1,51 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-export default function SessionSeats() {
+export default function SessionSeats({setOrderPlaced}) {
   const [seats, setSeats] = useState([]);
   const [infoSelected, setInfoSelected] = useState([]);
   const [dataSelected, setDataSelected] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
-
+  const [inputs, setInputs] = useState([]);
+  const navigate = useNavigate();
   const { idTime } = useParams();
 
+  const HandleInputChange = (e) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
+
+  function MandarDados(e) {
+    e.preventDefault();
+    const body = {
+        ids: selectedSeats,
+        name: inputs.name,
+        cpf: inputs.cpf,
+    };
+
+    const pCompleto = {
+      filme: infoSelected.title,
+      data:  dataSelected.weekday,
+      hora: dataSelected.date,
+      nomeComprador: inputs.name,
+      CPF: inputs.cpf,
+      assentos: seats
+    }
+
+    if(seats.length !== 0 && inputs.name && inputs.cpf){
+      const promisse = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", body)
+      promisse.then((res)=>{
+        setOrderPlaced(pCompleto)
+        navigate("/FullOrder")
+      })
+    }
+  }
+
+
   useEffect(() => {
+    //https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many
+
     const promisse = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/showtimes/${idTime}/seats`
     );
@@ -68,6 +102,27 @@ export default function SessionSeats() {
             <h2>Indisponível</h2>
           </LegendItem>
         </Legend>
+        <ContainerInputs>
+          <form onSubmit={()=> MandarDados()}>
+            <p>Nome do comprador(a)</p>
+            <input
+              name="name"
+              type="text"
+              placeholder="Escreva seu nome..."
+              required
+              onChange={HandleInputChange}
+            />
+            <p>CPF do comprador(a)</p>
+            <input
+              name="cpf"
+              type="number"
+              placeholder="Escreva seu CPF..."
+              required
+              onChange={HandleInputChange}
+            />
+            <button onClick={MandarDados}>Reservar Assento</button>
+          </form>
+        </ContainerInputs>
       </ContainerSeats>
 
       <MovieSelected>
@@ -83,7 +138,6 @@ export default function SessionSeats() {
   );
 }
 
-// Estilos
 const ContainerSessionSeats = styled.div`
   display: flex;
   justify-content: center;
@@ -195,3 +249,36 @@ const MovieSelected = styled.div`
 `;
 
 const InfoSelectedMovie = styled.div``;
+
+const ContainerInputs = styled.div`
+  width: 100%;
+  height: 80%;
+  display: flex;
+  p {
+    font-weight: bold;
+    font-size: 15px;
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  input,
+  button {
+    width: 80%;
+    height: 18%;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+
+  button {
+    background-color: #ee897f;
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;

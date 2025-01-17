@@ -42,6 +42,7 @@ export default function SessionTime() {
           </Hours>
         </ContainerDateHours>
       ))}
+      
           <MovieSelected>
             <h2><BsFillCameraReelsFill/>{chosenFilm.title}</h2>
             <img src={chosenFilm.posterURL}/>
