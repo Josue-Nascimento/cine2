@@ -26,12 +26,12 @@ export default function SessionSeats({setOrderPlaced}) {
 
     const pCompleto = {
       filme: infoSelected.title,
-      data:  dataSelected.weekday,
-      hora: dataSelected.date,
+      dia:  dataSelected.weekday,
+      data: dataSelected.date,
+      hora: dataSelected.showtime,
       nomeComprador: inputs.name,
       CPF: inputs.cpf,
-      assentos: seats
-    }
+      assentos: selectedSeats.map((seatId) => seats.find((seat) => seat.id === seatId)?.name).join(", Assento"),    }
 
     if(seats.length !== 0 && inputs.name && inputs.cpf){
       const promisse = axios.post("https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many", body)
@@ -52,7 +52,11 @@ export default function SessionSeats({setOrderPlaced}) {
     promisse.then((res) => {
       setSeats(res.data.seats);
       setInfoSelected(res.data.movie);
-      setDataSelected(res.data.day);
+      setDataSelected({
+        weekday: res.data.day.weekday,
+        date: res.data.day.date,
+        showtime: res.data.name, // Adiciona o horário aqui corretamente
+      });
     });
   }, [idTime]);
 
@@ -129,7 +133,7 @@ export default function SessionSeats({setOrderPlaced}) {
         <InfoSelectedMovie>
           <h2>{infoSelected.title}</h2>
           <h2>
-            {dataSelected.weekday} {dataSelected.date}
+            {dataSelected.weekday} {dataSelected.date} ás {dataSelected.showtime}
           </h2>
         </InfoSelectedMovie>
         <img src={infoSelected.posterURL} alt="Poster do filme" />

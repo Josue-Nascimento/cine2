@@ -19,7 +19,7 @@ function App() {
             <Route path="/" element={<MovieSession />} />
             <Route path="/SessionTime/:idMovies" element={<SessionTime />} />
             <Route path="/SessionSeats/:idTime" element={<SessionSeats setOrderPlaced={setOrderPlaced} />} />
-            <Route path="/FullOrder" element={<FullOrder />} />
+            <Route path="/FullOrder" element={<FullOrder orderPlaced={orderPlaced}/>} />
           </Routes>
         </BrowserRouter>
       </ContainerApp>
