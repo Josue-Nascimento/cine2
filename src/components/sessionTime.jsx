@@ -82,12 +82,12 @@ const Date = styled.div`
     color: #ee897f;
     font-size: 30px;
     margin-right: 20px;
+    
   }
   p {
     color: white;
     font-size: 20px;
     margin-left: 20px;
-  
   }
 `;
 
@@ -115,6 +115,9 @@ const Hours = styled.div`
     justify-content: center;
     text-decoration: none;
     color: #ee897f !important;
+  }
+    a{
+    text-decoration: none;
   }
 `;
 const MovieSelected = styled.div`

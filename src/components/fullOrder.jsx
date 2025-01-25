@@ -1,4 +1,5 @@
 import { FaCheckCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 
@@ -18,6 +19,11 @@ export default function FullOrder({orderPlaced}) {
           <p>Nome: {nomeComprador}</p>
           <p>CPF: {CPF}</p>
       </InfoFullOrder>
+<BackHome>
+  <Link to={"/"}>
+  <p>Voltar para tela inicial</p>
+  </Link>
+</BackHome>
     </ContainerFullOrder>);
 }
 
@@ -66,3 +72,20 @@ const Divider = styled.div`
   margin: 0 auto;
   margin-top: 5px;
 `;
+const BackHome = styled.div`
+background-color: #ee897f;
+width: 60%;
+height: 50px;
+display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 10px;
+margin-top: 20px;
+font-size: 20px;
+p{
+  color: white;
+}
+a {
+    text-decoration: none; 
+  }
+`
